@@ -1,5 +1,5 @@
 import re
-p = r"c:\Users\SWAMPOD\Downloads\বাপের রাস্তা · Baper Rasta.html"
+p = r"c:\Users\SWAMPOD\Downloads\baper-rasta.html"
 s = open(p, encoding="utf-8").read()
 i = s.rfind("<script")
 j = s.rfind("</script>")
