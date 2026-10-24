@@ -661,7 +661,11 @@ const vehicles=[];
 const LX=[2.7,6.2];
 function mkVehicle(kind){let m;if(kind==='car')m=mkCar();else if(kind==='cng')m=mkCNG();else if(kind==='bus')m=mkBus();else if(kind==='truck')m=mkTruck();else if(kind==='bike')m=mkBike();
   else{const r=mkRickshawNPC();m={g:r.g,wheels:r.wheels,circles:[-.9,.9],rad:.85,len:3.3,sp:[2.6,3.6]}}
-  const o=Object.assign(m,{kind,deadly:kind==='bus'||kind==='truck',dir:-1,x0:0,z:0,spd:5,spd0:5,ph:Math.random()*6,honk:0,on:false,nm:0});scene.add(o.g);return o}
+  const faction=kind==='bus'||kind==='truck'?'heavy':kind==='bike'?'bike':kind==='rick'?'rick':kind==='cng'?'cng':'car';
+  const fcol={heavy:0xff3b3b,bike:0x3bd4ff,rick:0xffc83d,cng:0x2fb36b,car:0x7dffc0}[faction];
+  const badge=new THREE.Mesh(new THREE.PlaneGeometry(.9,.55),new THREE.MeshBasicMaterial({color:fcol,side:THREE.DoubleSide,transparent:true,opacity:.92}));
+  badge.position.set(0,2.55,0);m.g.add(badge);
+  const o=Object.assign(m,{kind,deadly:kind==='bus'||kind==='truck',dir:-1,x0:0,z:0,spd:5,spd0:5,ph:Math.random()*6,honk:0,on:false,nm:0,faction,factionColor:fcol});scene.add(o.g);return o}
 function spawnVehicle(v,initial){
   let z=0;
   for(let t=0;t<10;t++){
@@ -1053,7 +1057,7 @@ function bearingWord(a){const d=a*57.3;return Math.abs(d)<25?'সামনে':(
 function drawMap(){
   const W=208,c=W/2,sc=.62;mx.clearRect(0,0,W,W);mx.save();mx.translate(c,c);mx.rotate(-P.h);mx.scale(sc,sc);mx.translate(-P.x,-P.z);
   mx.fillStyle='#3a3d52';mx.fillRect(-8,P.z-260,16,520);mx.fillStyle='#6a5f56';mx.fillRect(-.9,P.z-260,1.8,520);mx.fillStyle='#5b4440';mx.fillRect(-12,P.z-260,4,520);mx.fillRect(8,P.z-260,4,520);
-  mx.fillStyle='#ff5a5a';for(const v of vehicles){if(v.on&&Math.abs(v.z-P.z)<200)mx.fillRect(v.x0-.9,v.z-v.len/2,1.8,v.len)}
+  for(const v of vehicles){if(v.on&&Math.abs(v.z-P.z)<200){mx.fillStyle='#'+v.factionColor.toString(16).padStart(6,'0');mx.fillRect(v.x0-.9,v.z-v.len/2,1.8,v.len)}}
   mx.fillStyle='#ff3b3b';for(const m of mobs){if(Math.abs(m.z-P.z)<200)mx.fillRect(m.x-1.2,m.z-1.2,2.4,2.4)}
   const pi=Math.round(-P.z/CH);mx.fillStyle='#6fd8ff';for(let k=pi-5;k<=pi+5;k++){const s=stationAt(k);if(s){mx.beginPath();mx.arc(s.x,s.z,3.2,0,7);mx.fill()}}
   mx.fillStyle='#ff8ad6';for(let k=pi-5;k<=pi+5;k++){const z=pinkZoneAt(k);if(z){mx.beginPath();mx.arc(z.x,z.z,3.2,0,7);mx.fill()}}
@@ -1335,7 +1339,7 @@ async function buildNewsCanvas(){
   x.fillStyle='#a31224';x.font='700 44px '+F;y=wrapTxt(x,$('newsB').textContent,60,y+12,960,58);
   x.fillStyle='#111';x.font='500 36px '+F;const y2=wrapTxt(x,$('newsT').textContent,60,y+12,960,50);
    x.textAlign='left';x.fillStyle='#5b5346';x.font='500 24px '+F;wrapTxt(x,$('newsC').textContent,60,y2+12,960,34);
-  x.textAlign='center';x.fillStyle='#a31224';x.font='700 38px '+F;x.fillText('আপনিও চালান: রাস্তা কি আপনার বাপের?',W2/2,1300);
+  x.textAlign='center';x.fillStyle='#a31224';x.font='700 38px '+F;x.fillText('আপনিও চালান: হর্ন বাজাও মিয়া',W2/2,1300);
   x.strokeStyle='#a31224';x.lineWidth=3;x.beginPath();x.moveTo(60,1320);x.lineTo(1020,1320);x.stroke();
   return c;
 }
