@@ -663,9 +663,7 @@ function mkVehicle(kind){let m;if(kind==='car')m=mkCar();else if(kind==='cng')m=
   else{const r=mkRickshawNPC();m={g:r.g,wheels:r.wheels,circles:[-.9,.9],rad:.85,len:3.3,sp:[2.6,3.6]}}
   const faction=kind==='bus'||kind==='truck'?'heavy':kind==='bike'?'bike':kind==='rick'?'rick':kind==='cng'?'cng':'car';
   const fcol={heavy:0xff3b3b,bike:0x3bd4ff,rick:0xffc83d,cng:0x2fb36b,car:0x7dffc0}[faction];
-  const badge=new THREE.Mesh(new THREE.PlaneGeometry(.9,.55),new THREE.MeshBasicMaterial({color:fcol,side:THREE.DoubleSide,transparent:true,opacity:.92}));
-  badge.position.set(0,2.55,0);m.g.add(badge);
-  const o=Object.assign(m,{kind,deadly:kind==='bus'||kind==='truck',dir:-1,x0:0,z:0,spd:5,spd0:5,ph:Math.random()*6,honk:0,on:false,nm:0,faction,factionColor:fcol});scene.add(o.g);return o}
+   const o=Object.assign(m,{kind,deadly:kind==='bus'||kind==='truck',dir:-1,x0:0,z:0,spd:5,spd0:5,ph:Math.random()*6,honk:0,on:false,nm:0,faction,factionColor:fcol});scene.add(o.g);return o}
 function spawnVehicle(v,initial){
   let z=0;
   for(let t=0;t<10;t++){
