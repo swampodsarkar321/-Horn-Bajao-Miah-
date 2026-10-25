@@ -1201,7 +1201,7 @@ function resetGame(){
   showPass(false);camH=0;camInit=false;M.state='none';marker.visible=false;waiting.visible=false;
   closeCase();C.cool=0;C.t=0;COP.armed=false;cop.visible=false;
   mobs.forEach(m=>scene.remove(m.g));mobs.length=0;mobSpawnT=12;hazards.forEach(h=>scene.remove(h.g));hazards.length=0;hazardTimer=20;proc.active=false;proc.t=0;proc.unsafeT=0;procTimer=rnd(25,45);cityEventT=rnd(40,80);bodyG.rotation.set(0,0,0);bodyG.scale.setScalar(1);bodyG.visible=true;if(bodyG.userData)bodyG.userData.broken=false;bodyG.position.set(P.x,0,P.z);
-  vehicles.forEach(v=>spawnVehicle(v,true));peds.forEach(p=>spawnPed(p,true));ensureChunks(true);try{resetWeather();resetHoles()}catch(e){}lastDistrict=-1;DISTRICT_FOG=DISTRICTS[districtOf(0)].fog;applyWeatherVisual();
+  vehicles.forEach(v=>spawnVehicle(v,true));peds.forEach(p=>spawnPed(p,true));ensureChunks(true);lastDistrict=-1;DISTRICT_FOG=DISTRICTS[districtOf(0)].fog;try{resetWeather();resetHoles();applyWeatherVisual()}catch(e){}
 }
 function startGame(){for(const d of debris){scene.remove(d.m)};debris.length=0;saveName();
   audioInit();if(AC&&AC.state==='suspended')AC.resume();
